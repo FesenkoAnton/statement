@@ -17,7 +17,7 @@ public class StudentsStatementDAO implements StudentsDAO {
 
         try (Connection connection = getConnection();
              Statement statement = connection.createStatement();) {
-            ResultSet resultSet = statement.executeQuery( SQLStudent.SELECT.QUERY + id);
+            ResultSet resultSet = statement.executeQuery(SQLStudent.SELECT.QUERY + id);
 
             if (resultSet.next()) {
                 Student student = new Student();
@@ -31,46 +31,45 @@ public class StudentsStatementDAO implements StudentsDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace();//runtime
         }
 
         return null;
     }
+
     @Override
     public Set<Student> getAllStudents() {
         return null;
     }
 
     @Override
-    public Student getStudentsByGroup() {
-        return null;
+    public void insertStudent(Long id, String name, int age, int groups) {
+
     }
 
     @Override
-    public boolean insertStudent(int i1, String s, int i2, int i3) {
-        return false;
+    public void updateStudent() {
+
     }
 
     @Override
-    public boolean updateStudent() {
-        return false;
+    public void deleteUser() {
+
     }
 
     @Override
-    public boolean deleteUser() {
-        return false;
+    public void createTable() {
+
     }
 
-    @Override
-    public boolean createTable() {
-        return false;
-    }
 
-    enum SQLStudent{
-         SELECT("SELECT * FROM students WHERE id=");
+    enum SQLStudent {
+        SELECT("SELECT * FROM students WHERE id=");
 
         String QUERY;
 
-        SQLStudent(String QUERY) { this.QUERY = QUERY;}
+        SQLStudent(String QUERY) {
+            this.QUERY = QUERY;
+        }
     }
 }

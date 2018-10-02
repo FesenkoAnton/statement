@@ -40,54 +40,50 @@ public class StudentsPrepearedStatementDAO implements StudentsDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return null;//return empty SET
     }
 
     @Override
-    public Student getStudentsByGroup() {
-        return null;
-    }
-
-    @Override
-    public boolean insertStudent(int i1, String s, int i2, int i3) {
+    public void insertStudent(Long id, String name, int age, int groups) {
         try (Connection con = getConnection();
              PreparedStatement ps = con.prepareStatement(SQLStudent.INSERT.QUERY);) {
 
-            ps.setInt(1, i1);
-            ps.setString(2, s);
-            ps.setInt(3, i2);
-            ps.setInt(4, i3);
+            ps.setLong(1, id);
+            ps.setString(2, name);
+            ps.setInt(3, age);
+            ps.setInt(4, groups);
             ps.executeUpdate();
 
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
-        return false;
     }
 
     @Override
-    public boolean updateStudent() {
-        return false;
+    public void updateStudent() {
+
     }
 
     @Override
-    public boolean deleteUser() {
-        return false;
+    public void deleteUser() {
+
     }
 
     @Override
-    public boolean createTable() {
-        return false;
+    public void createTable() {
+
     }
 
-    enum SQLStudent{
+
+    enum SQLStudent {
         INSERT("INSERT INTO students (id, name, age, groups) VALUES (?,?,?,?)"),
         SELECT("SELECT * FROM students");
 
         String QUERY;
 
-        SQLStudent(String QUERY) { this.QUERY = QUERY;}
+        SQLStudent(String QUERY) {
+            this.QUERY = QUERY;
+        }
     }
 }

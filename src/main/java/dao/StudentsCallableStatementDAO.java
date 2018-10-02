@@ -11,6 +11,7 @@ import static connection.ConnectionFactory.getConnection;
 
 
 public class StudentsCallableStatementDAO implements StudentsDAO {
+
     @Override
     public Student getStudent(int i) {
         return null;
@@ -22,37 +23,25 @@ public class StudentsCallableStatementDAO implements StudentsDAO {
     }
 
     @Override
-    public Student getStudentsByGroup() {
-        return null;
+    public void insertStudent(Long id, String name, int age, int groups) {
+
     }
 
     @Override
-    public boolean insertStudent(int i1,String s,int i2,int i3) {
-        return false;
+    public void updateStudent() {
+
     }
 
     @Override
-    public boolean updateStudent() {
-        return false;
-    }
+    public void deleteUser() {
 
-    @Override
-    public boolean deleteUser() {
-        return false;
     }
-
-    @Override
-    public boolean createTable() {
-        try(Connection con = getConnection();
-            CallableStatement cs=con.prepareCall("{call add_student2()}");)
-        {
+    public void createTable() {
+        try (Connection con = getConnection();
+             CallableStatement cs = con.prepareCall("{call add_student2()}");) {
             cs.execute();
-            return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        catch(SQLException e){
-            e.printStackTrace();
-        }
-
-        return false;
     }
 }

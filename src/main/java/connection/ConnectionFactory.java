@@ -1,28 +1,44 @@
 package connection;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class ConnectionFactory {
-    private static final String URL = "jdbc:postgresql://localhost:5433/infop";
-    private static final String USER = "postgres";
-    private static String PASSWORD ="";
+    static Properties proper = new Properties();
+    private static String pathToProper = "C:/Projects/statement1/lib/db.properties";
 
-    public static Connection getConnection(){
+    public static Connection getConnection() {
+        getPropertiesConnection();
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName(proper.getProperty("DB_DRIVER_CLASS"));
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
+
         }
-        try{
-            return DriverManager.getConnection(URL,USER,PASSWORD);
-        }catch (SQLException e){
-            throw new RuntimeException("Connection to DB is abort ",e);
+        try {
+            return DriverManager.getConnection("DB_URL", "DB_USERNAME", "DB_PASSWORD");
+        } catch (SQLException e) {
+            throw new RuntimeException("Connection to DB is abort ", e);
         }
     }
 
-    public static void setPASSWORD(String PASSWORD) {
-        ConnectionFactory.PASSWORD = PASSWORD;
+    private static void getPropertiesConnection() {
+        FileInputStream fileInStr = null;
+        try {
+            fileInStr = new FileInputStream(pathToProper);
+            try {
+                proper.load(fileInStr);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("File Not Found properties" + e);
+        }
     }
+
 }
