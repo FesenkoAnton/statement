@@ -21,7 +21,7 @@ public class ConnectionFactory {
 
         }
         try {
-            return DriverManager.getConnection("DB_URL", "DB_USERNAME", "DB_PASSWORD");
+            return DriverManager.getConnection(proper.getProperty("DB_URL"), proper.getProperty("DB_USERNAME"), proper.getProperty("DB_PASSWORD"));
         } catch (SQLException e) {
             throw new RuntimeException("Connection to DB is abort ", e);
         }
@@ -37,7 +37,7 @@ public class ConnectionFactory {
                 throw new RuntimeException(e);
             }
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("File Not Found properties" + e);
+            throw new RuntimeException("File Not Found properties", e);
         }
     }
 
